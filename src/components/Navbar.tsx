@@ -21,7 +21,7 @@ const Navbar = () => {
             <Link to="/" className="flex-shrink-0 flex items-center space-x-2">
               <Mail className="h-8 w-8 text-white" />
               <span className="text-2xl font-bold text-white">
-                SmartBox
+                Smart Letter Box
               </span>
             </Link>
           </div>
