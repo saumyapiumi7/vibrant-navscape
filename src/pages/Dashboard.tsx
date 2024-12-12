@@ -71,9 +71,8 @@ const Dashboard = () => {
     <div className="min-h-screen bg-gradient-to-r from-blue-50 to-purple-50 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-8 animate-fade-down">
-          <h1 className="text-3xl font-bold text-gray-900">SmartBox Dashboard</h1>
-          <p className="text-gray-600">Monitor your smart letterbox status and notifications</p>
-        </div>
+          <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
+          Track the letterbox activity and system status in real time.        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {stats.map((stat, index) => (

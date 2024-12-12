@@ -8,15 +8,15 @@ const Footer = () => {
           <div className="space-y-4">
             <h3 className="text-lg font-semibold flex items-center gap-2">
               <Mail className="h-5 w-5" />
-              SmartBox
+              Smart Letter Box
             </h3>
             <p className="text-blue-200">
-              Intelligent letterbox solutions for the modern world
+              Intelligent letterbox solutions for the modern world & Revolutionizing Rural Postal Communication.
             </p>
           </div>
           
           <div>
-            <h4 className="font-semibold mb-4">Quick t Links</h4>
+            <h4 className="font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2">
               <li><a href="/" className="text-blue-200 hover:text-white transition-colors">Home</a></li>
               <li><a href="/technology" className="text-blue-200 hover:text-white transition-colors">Technology</a></li>
@@ -30,15 +30,15 @@ const Footer = () => {
             <ul className="space-y-2">
               <li className="flex items-center gap-2 text-blue-200">
                 <Mail size={16} />
-                info@smartbox.com
+                saumyapiumi7@gmail.com
               </li>
               <li className="flex items-center gap-2 text-blue-200">
                 <Phone size={16} />
-                +1 (555) 123-4567
+                +94 (70) 311 3226
               </li>
               <li className="flex items-center gap-2 text-blue-200">
                 <MapPin size={16} />
-                123 Smart Street
+                437/1, Kohanegama, Malagane.
               </li>
             </ul>
           </div>
@@ -63,7 +63,7 @@ const Footer = () => {
         </div>
         
         <div className="mt-8 pt-8 border-t border-blue-800 text-center text-blue-200">
-          <p>&copy; {new Date().getFullYear()} SmartBox. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Smart Letter Box. All rights reserved.</p>
         </div>
       </div>
     </footer>

@@ -8,13 +8,13 @@ const Index = () => {
       <section className="bg-gradient-to-r from-primary/10 to-secondary/10 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center space-y-8 animate-fade-up">
+            
             <h1 className="text-5xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              Welcome to TechCo
+              IoT-Based Smart Letter Box Notification 
             </h1>
+            
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Transforming ideas into digital reality with cutting-edge technology
-              and innovative solutions.
-            </p>
+            Bringing Efficiency to Every Letter with IoT Innovation            </p>
             <div className="flex justify-center gap-4">
               <Link
                 to="/technology"
@@ -34,19 +34,19 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                title: "Innovation",
+                title: "Efficiency",
                 description:
-                  "Pushing boundaries with cutting-edge technology solutions",
+                  "Optimizing time and effort with smart, automated solutions.",
               },
               {
-                title: "Expertise",
+                title: "Timeliness",
                 description:
-                  "Team of skilled professionals with years of experience",
+                  "Real-time notifications to keep you updated without delays.",
               },
               {
-                title: "Results",
+                title: "Relevance",
                 description:
-                  "Delivering measurable impact for businesses worldwide",
+                  "Customized for the unique needs of rural households.",
               },
             ].map((feature, index) => (
               <div
