@@ -14,22 +14,28 @@ const Dashboard = () => {
   const { data: notifications, isLoading } = useQuery({
     queryKey: ['notifications'],
     queryFn: async () => {
-      const response = await fetch('https://notification-r8ql4q41.b4a.run/api/notifications');
-      if (!response.ok) {
-        throw new Error('Failed to fetch notifications');
+      try {
+        const response = await fetch('https://notification-r8ql4q41.b4a.run/api/notifications');
+        if (!response.ok) {
+          throw new Error('Failed to fetch notifications');
+        }
+        const data = await response.json();
+        // Ensure we always return an array
+        return Array.isArray(data) ? data : [];
+      } catch (error) {
+        console.error('Error fetching notifications:', error);
+        toast.error("Failed to load notifications");
+        return [];
       }
-      return response.json() as Promise<Notification[]>;
-    },
-    onError: (error) => {
-      console.error('Error fetching notifications:', error);
-      toast.error("Failed to load notifications");
     }
   });
 
   const stats = [
     {
       title: "New Letters",
-      value: notifications?.filter(n => n.type === 'new_letter').length.toString() || "0",
+      value: Array.isArray(notifications) 
+        ? notifications.filter(n => n.type === 'new_letter').length.toString() 
+        : "0",
       icon: <Mail className="w-6 h-6" />,
       change: "Today",
     },
@@ -93,7 +99,7 @@ const Dashboard = () => {
             <div className="space-y-4">
               {isLoading ? (
                 <p className="text-gray-500">Loading notifications...</p>
-              ) : notifications && notifications.length > 0 ? (
+              ) : Array.isArray(notifications) && notifications.length > 0 ? (
                 notifications.map((notification) => (
                   <div
                     key={notification.id}
