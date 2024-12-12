@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Mail, Bell, Settings, Battery, Wifi, Calendar } from "lucide-react";
-import { toast } from "sonner";
 import { useQuery } from "@tanstack/react-query";
+import { Mail, Bell, Settings, Battery, Wifi, Calendar, Send } from "lucide-react";
+import { toast } from "sonner";
 
 interface Notification {
   id: string;
@@ -20,7 +20,6 @@ const Dashboard = () => {
           throw new Error('Failed to fetch notifications');
         }
         const data = await response.json();
-        // Ensure we always return an array
         return Array.isArray(data) ? data : [];
       } catch (error) {
         console.error('Error fetching notifications:', error);
@@ -30,14 +29,16 @@ const Dashboard = () => {
     }
   });
 
+  const letterCount = Array.isArray(notifications) 
+    ? notifications.filter(n => n.type === 'new_letter').length 
+    : 0;
+
   const stats = [
     {
-      title: "New Letters",
-      value: Array.isArray(notifications) 
-        ? notifications.filter(n => n.type === 'new_letter').length.toString() 
-        : "0",
+      title: "Total Letters",
+      value: letterCount.toString(),
       icon: <Mail className="w-6 h-6" />,
-      change: "Today",
+      change: "All Time",
     },
     {
       title: "Battery Level",
@@ -93,7 +94,7 @@ const Dashboard = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div className="bg-white p-6 rounded-xl shadow-lg animate-fade-up">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-semibold">Recent Notifications</h2>
+              <h2 className="text-xl font-semibold">Letter History</h2>
               <Bell className="h-5 w-5 text-blue-600" />
             </div>
             <div className="space-y-4">
@@ -121,28 +122,28 @@ const Dashboard = () => {
 
           <div className="bg-white p-6 rounded-xl shadow-lg animate-fade-up">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-semibold">Quick Actions</h2>
+              <h2 className="text-xl font-semibold">Integration Status</h2>
               <Settings className="h-5 w-5 text-blue-600" />
             </div>
             <div className="grid grid-cols-2 gap-4">
+              <div className="p-4 bg-green-100 rounded-lg text-green-600 flex items-center justify-center gap-2">
+                <Send size={18} />
+                Blynk Connected
+              </div>
+              <div className="p-4 bg-green-100 rounded-lg text-green-600 flex items-center justify-center gap-2">
+                <Mail size={18} />
+                Gmail Active
+              </div>
+              <div className="p-4 bg-green-100 rounded-lg text-green-600 flex items-center justify-center gap-2">
+                <Bell size={18} />
+                IFTTT Enabled
+              </div>
               <button
                 onClick={handleNotificationTest}
                 className="p-4 bg-blue-100 rounded-lg text-blue-600 hover:bg-blue-200 transition-colors flex items-center justify-center gap-2"
               >
                 <Bell size={18} />
                 Test Notification
-              </button>
-              <button className="p-4 bg-blue-100 rounded-lg text-blue-600 hover:bg-blue-200 transition-colors flex items-center justify-center gap-2">
-                <Settings size={18} />
-                Configure
-              </button>
-              <button className="p-4 bg-blue-100 rounded-lg text-blue-600 hover:bg-blue-200 transition-colors flex items-center justify-center gap-2">
-                <Mail size={18} />
-                Check Mail
-              </button>
-              <button className="p-4 bg-blue-100 rounded-lg text-blue-600 hover:bg-blue-200 transition-colors flex items-center justify-center gap-2">
-                <Wifi size={18} />
-                Check Connection
               </button>
             </div>
           </div>
