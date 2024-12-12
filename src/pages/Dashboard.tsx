@@ -3,15 +3,19 @@ import { useQuery } from "@tanstack/react-query";
 import { Mail, Bell, Settings, Battery, Wifi, Calendar, Send } from "lucide-react";
 import { toast } from "sonner";
 
-interface Notification {
-  id: string;
-  message: string;
+interface NotificationData {
+  _id: string;
   timestamp: string;
-  type: string;
+  __v: number;
+}
+
+interface APIResponse {
+  success: boolean;
+  data: NotificationData[];
 }
 
 const Dashboard = () => {
-  const { data: notifications, isLoading } = useQuery({
+  const { data: apiResponse, isLoading } = useQuery<APIResponse>({
     queryKey: ['notifications'],
     queryFn: async () => {
       try {
@@ -20,18 +24,17 @@ const Dashboard = () => {
           throw new Error('Failed to fetch notifications');
         }
         const data = await response.json();
-        return Array.isArray(data) ? data : [];
+        return data;
       } catch (error) {
         console.error('Error fetching notifications:', error);
         toast.error("Failed to load notifications");
-        return [];
+        throw error;
       }
     }
   });
 
-  const letterCount = Array.isArray(notifications) 
-    ? notifications.filter(n => n.type === 'new_letter').length 
-    : 0;
+  const notifications = apiResponse?.data || [];
+  const letterCount = notifications.length;
 
   const stats = [
     {
@@ -100,14 +103,14 @@ const Dashboard = () => {
             <div className="space-y-4">
               {isLoading ? (
                 <p className="text-gray-500">Loading notifications...</p>
-              ) : Array.isArray(notifications) && notifications.length > 0 ? (
+              ) : notifications.length > 0 ? (
                 notifications.map((notification) => (
                   <div
-                    key={notification.id}
+                    key={notification._id}
                     className="p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors"
                   >
                     <div className="flex justify-between items-center">
-                      <span className="font-medium">{notification.message}</span>
+                      <span className="font-medium">New letter received</span>
                       <span className="text-sm text-gray-500">
                         {new Date(notification.timestamp).toLocaleString()}
                       </span>
