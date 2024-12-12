@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Mail, Bell } from "lucide-react";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,13 +14,14 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="bg-white shadow-md fixed w-full z-50">
+    <nav className="bg-gradient-to-r from-blue-600 to-purple-600 shadow-md fixed w-full z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <Link to="/" className="flex-shrink-0 flex items-center">
-              <span className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                TechCo
+            <Link to="/" className="flex-shrink-0 flex items-center space-x-2">
+              <Mail className="h-8 w-8 text-white" />
+              <span className="text-2xl font-bold text-white">
+                SmartBox
               </span>
             </Link>
           </div>
@@ -33,9 +34,9 @@ const Navbar = () => {
                 to={item.path}
                 className={`${
                   location.pathname === item.path
-                    ? "text-primary"
-                    : "text-gray-600 hover:text-primary"
-                } transition-colors duration-200`}
+                    ? "text-white border-b-2 border-white"
+                    : "text-blue-100 hover:text-white hover:border-b-2 hover:border-blue-200"
+                } transition-all duration-200`}
               >
                 {item.name}
               </Link>
@@ -46,7 +47,7 @@ const Navbar = () => {
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-gray-600 hover:text-primary"
+              className="text-white hover:text-blue-200"
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -56,17 +57,17 @@ const Navbar = () => {
 
       {/* Mobile Navigation Menu */}
       {isOpen && (
-        <div className="md:hidden animate-fade-down">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white">
+        <div className="md:hidden bg-blue-700 animate-fade-down">
+          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             {navItems.map((item) => (
               <Link
                 key={item.name}
                 to={item.path}
                 className={`${
                   location.pathname === item.path
-                    ? "text-primary"
-                    : "text-gray-600 hover:text-primary"
-                } block px-3 py-2 text-base`}
+                    ? "text-white bg-blue-800"
+                    : "text-blue-100 hover:text-white hover:bg-blue-800"
+                } block px-3 py-2 rounded-md text-base transition-colors duration-200`}
                 onClick={() => setIsOpen(false)}
               >
                 {item.name}
