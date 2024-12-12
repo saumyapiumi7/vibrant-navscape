@@ -1,12 +1,35 @@
 import { useState } from "react";
 import { Mail, Bell, Settings, Battery, Wifi, Calendar } from "lucide-react";
 import { toast } from "sonner";
+import { useQuery } from "@tanstack/react-query";
+
+interface Notification {
+  id: string;
+  message: string;
+  timestamp: string;
+  type: string;
+}
 
 const Dashboard = () => {
+  const { data: notifications, isLoading } = useQuery({
+    queryKey: ['notifications'],
+    queryFn: async () => {
+      const response = await fetch('https://notification-r8ql4q41.b4a.run/api/notifications');
+      if (!response.ok) {
+        throw new Error('Failed to fetch notifications');
+      }
+      return response.json() as Promise<Notification[]>;
+    },
+    onError: (error) => {
+      console.error('Error fetching notifications:', error);
+      toast.error("Failed to load notifications");
+    }
+  });
+
   const stats = [
     {
       title: "New Letters",
-      value: "3",
+      value: notifications?.filter(n => n.type === 'new_letter').length.toString() || "0",
       icon: <Mail className="w-6 h-6" />,
       change: "Today",
     },
@@ -27,27 +50,6 @@ const Dashboard = () => {
       value: "2 min ago",
       icon: <Calendar className="w-6 h-6" />,
       change: "Active",
-    },
-  ];
-
-  const notifications = [
-    {
-      id: 1,
-      message: "New letter detected",
-      time: "2 minutes ago",
-      type: "new",
-    },
-    {
-      id: 2,
-      message: "Battery level notification sent",
-      time: "1 hour ago",
-      type: "system",
-    },
-    {
-      id: 3,
-      message: "Daily check completed",
-      time: "3 hours ago",
-      type: "system",
     },
   ];
 
@@ -89,17 +91,25 @@ const Dashboard = () => {
               <Bell className="h-5 w-5 text-blue-600" />
             </div>
             <div className="space-y-4">
-              {notifications.map((notification) => (
-                <div
-                  key={notification.id}
-                  className="p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors"
-                >
-                  <div className="flex justify-between items-center">
-                    <span className="font-medium">{notification.message}</span>
-                    <span className="text-sm text-gray-500">{notification.time}</span>
+              {isLoading ? (
+                <p className="text-gray-500">Loading notifications...</p>
+              ) : notifications && notifications.length > 0 ? (
+                notifications.map((notification) => (
+                  <div
+                    key={notification.id}
+                    className="p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors"
+                  >
+                    <div className="flex justify-between items-center">
+                      <span className="font-medium">{notification.message}</span>
+                      <span className="text-sm text-gray-500">
+                        {new Date(notification.timestamp).toLocaleString()}
+                      </span>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))
+              ) : (
+                <p className="text-gray-500">No notifications available</p>
+              )}
             </div>
           </div>
 
