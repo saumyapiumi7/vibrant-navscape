@@ -10,6 +10,7 @@ import Technology from "./pages/Technology";
 import About from "./pages/About";
 import Login from "./components/Login";
 import Dashboard from "./pages/Dashboard";
+import Memo from "./pages/Memo.jsx";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +31,8 @@ const App = () => (
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/technology" element={<Technology />} />
+              {/* **<Route path="/memo" element={<Memo />} />  */}
+
               <Route path="/about" element={<About />} />
               <Route path="/login" element={<Login />} />
               <Route
