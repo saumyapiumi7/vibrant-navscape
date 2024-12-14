@@ -28,7 +28,7 @@ const About = () => {
         </div>
 
         <div className="mt-16 bg-white p-8 rounded-xl shadow-lg animate-fade-up">
-          <h2 className="text-2xl font-semibold mb-4 text-center">Values</h2>
+          <h2 className="text-2xl font-bold mb-10 text-center">Values</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
