@@ -30,7 +30,7 @@ const Login = () => {
             SmartBox Dashboard
           </h2>
           <p className="text-gray-600">
-            Monitor your letterbox notifications and settings
+            Monitor the letterbox notifications and settings
           </p>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
